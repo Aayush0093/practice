@@ -1,0 +1,79 @@
+169. Majority Element
+Solved
+Easy
+
+Topics
+Companies
+Given an array nums of size n, return the majority element.
+
+The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.
+
+ 
+
+Example 1:
+
+Input: nums = [3,2,3]
+Output: 3
+Example 2:
+
+Input: nums = [2,2,1,1,1,2,2]
+Output: 2
+
+
+class Solution {
+public:
+    int majorityElement(vector<int>& arr) {
+        
+        int n = arr.size();
+        // // brute
+        // int count;
+        // for(int i = 0 ; i < n ; i++){
+        //     count = 0;
+        //     for(int j = 0; j < n; j++){
+        //         if(arr[i]==arr[j])
+        //             count++;
+        //     }
+        //     if(count>n/2) return arr[i];
+        // }
+        // return -1;
+
+        //hashing
+        // map <int , int> mpp;
+
+        // for(int i = 0; i < n ; i++){
+        //     mpp[arr[i]]++;
+        // }
+
+        // for(auto it : mpp){
+        //     if(it.second > n/2){
+        //         return it.first;
+        //     }
+        // }
+
+        // return -1;
+
+        // optimal
+        int count = 0;
+        int ele = arr[0];
+        for(int i = 0 ; i < n ; i++){
+            if(count==0){
+                count=1;
+                ele = arr[i];
+            }
+            else if(arr[i]==ele) count++;
+            else count--;
+        }
+
+        int c1 = 0;
+        for(int i = 0 ; i < n;i++){
+            if(arr[i]==ele){
+                c1++;
+            }
+        }
+        if(c1>n/2) return ele;
+
+        return -1;
+
+
+    }
+};
