@@ -1,0 +1,112 @@
+229. Majority Element II
+Solved
+Medium
+
+Topics
+Companies
+
+Hint
+Given an integer array of size n, find all elements that appear more than ⌊ n/3 ⌋ times.
+
+ 
+
+Example 1:
+
+Input: nums = [3,2,3]
+Output: [3]
+Example 2:
+
+Input: nums = [1]
+Output: [1]
+Example 3:
+
+Input: nums = [1,2]
+Output: [1,2]
+
+
+
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& v) {
+
+        int n = v.size();
+        vector<int> ls;
+
+        // optimal voting moore
+        int count1 = 0 , count2 = 0, ele1 = INT_MIN , ele2 = INT_MIN;
+
+        for(int i = 0 ; i < n ; i++){
+
+            if(count1==0 && v[i]!=ele2){
+                count1=1;
+                ele1=v[i];
+            }
+            else if(count2==0 && v[i]!=ele1){
+                count2=1;
+                ele2=v[i];
+            }
+            else if(v[i]==ele1){
+                count1++;
+            }
+            else if(v[i]==ele2){
+                count2++;
+            }
+            else{
+                count1--;
+                count2--;
+            }
+        }
+
+        int c1=0,c2=0;
+        for(int i = 0 ; i< n ; i++){
+            if(v[i]==ele1) c1++;
+            if(v[i]==ele2) c2++;
+        }
+
+        int mini = (n/3)+1;
+        if(c1>=mini) ls.push_back(ele1);
+        if(c2>=mini) ls.push_back(ele2);
+
+        // // better
+        // map<int, int> mpp;
+        // for(int i = 0; i <n ;i++){
+        //     mpp[v[i]]++;
+        // }
+
+        // for(auto it: mpp){
+        //     if(it.second>(n/3))
+        //         ls.push_back(it.first);
+        //     if(ls.size()==2) break;
+        // }
+
+
+        // // brute
+        // // for example we have 8 elements
+        // // at max we can have atmost 2 elements
+        // vector<int> ls;
+        // int count = 0;
+        // int n = v.size();
+        // for (int i = 0; i < n; i++) {
+        // //selected element is v[i]:
+        // // Checking if v[i] is not already
+        // // a part of the answer:
+        // if (ls.size() == 0 || ls[0] != v[i]) {
+        //     int cnt = 0;
+        //     for (int j = 0; j < n; j++) {
+        //         // counting the frequency of v[i]
+        //         if (v[j] == v[i]) {
+        //             cnt++;
+        //         }
+        //     }
+
+        //     // check if frquency is greater than n/3:
+        //     if (cnt > (n / 3))
+        //         ls.push_back(v[i]);
+        //     }
+
+        //     if (ls.size() == 2) break;
+        // }
+
+    return ls;
+    }
+};
